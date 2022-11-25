@@ -52,6 +52,12 @@ return [
                 'update_password_error' => 'There was a problem changing this users password. Please try again.',
             ],
         ],
+        'dictionaries' => [
+            'create_error' => 'There was a problem creating this dictionary. Please try again.',
+        ],
+        'word' => [
+            'create_error' => 'There was a problem creating this word. Please try again.',
+        ]
     ],
 
     'frontend' => [
