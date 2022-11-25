@@ -1,0 +1,1071 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "API for mobile && js applications.",
+        "version": "1.0.0",
+        "title": "GBKSOFT Test API"
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Channel",
+            "description": "Chat module"
+        }
+    ],
+    "paths": {
+        "/v1/user/login/{type}": {
+            "post": {
+                "security": [],
+                "summary": "Create access token for APP using social account",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "userCreateAccessTokenUsingSocialAccount",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "type",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "facebook",
+                                "linkedin",
+                                "google",
+                                "twitter",
+                                "sign-in-with-apple"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status201"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/token"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Get token facebook example: https://www.facebook.com/dialog/oauth?client_id={client_id}&response_type=token&redirect_uri={redirect_uri}&scope={scope}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/login": {
+            "post": {
+                "security": [],
+                "summary": "Create access token for APP",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "userCreateAccessToken",
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status201"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/token"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "E-mail Minimum 2, maximum 255 characters"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Minimum 2, maximum 255 characters"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/register": {
+            "post": {
+                "security": [],
+                "summary": "Create user for APP",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "userCreate",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/token"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Minimum 2, maximum 255 characters"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Minimum 2, maximum 255 characters"
+                                    },
+                                    "isRememberMe": {
+                                        "enum": [
+                                            "no",
+                                            "yes"
+                                        ],
+                                        "default": "no",
+                                        "description": "are you need remember this token?"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/current": {
+            "get": {
+                "summary": "Current user for APP",
+                "tags": [
+                    "User"
+                ],
+                "operationId": "userCurrent",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/user"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/logout": {
+            "post": {
+                "summary": "Logout current user",
+                "tags": [
+                    "User"
+                ],
+                "operationId": "userLogout",
+                "responses": {
+                    "204": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/config": {
+            "get": {
+                "security": [],
+                "summary": "Rest application config",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "configIndex",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/config"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/pages": {
+            "get": {
+                "security": [],
+                "summary": "Static pages list",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "pagesIndex",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Pagination page"
+                    },
+                    {
+                        "in": "query",
+                        "name": "perPage",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Per page items"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/staticPage"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/pages/{slug}": {
+            "get": {
+                "security": [],
+                "summary": "Static page view",
+                "tags": [
+                    "AnyBody"
+                ],
+                "operationId": "pagesView",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "slug",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/staticPage"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/change-password": {
+            "patch": {
+                "summary": "Change User Password",
+                "tags": [
+                    "User"
+                ],
+                "operationId": "userChangePassword",
+                "responses": {
+                    "204": {
+                        "description": "No Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Minimum 2, maximum 255 characters"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/recovery-password": {
+            "post": {
+                "security": [],
+                "summary": "Recovery user password by email",
+                "tags": [
+                    "User"
+                ],
+                "operationId": "userRecoveryPasswordByEmail",
+                "responses": {
+                    "204": {
+                        "description": "No Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recoveryPasswordRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/new-password": {
+            "post": {
+                "security": [],
+                "summary": "Recovery user password by email",
+                "tags": [
+                    "User"
+                ],
+                "operationId": "userRecoveryPasswordChange",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/user"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/recoveryPassword"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/email/resend": {
+            "post": {
+                "security": [],
+                "summary": "Resend verification link",
+                "tags": [
+                    "Email"
+                ],
+                "operationId": "emailResendVerification",
+                "responses": {
+                    "204": {
+                        "description": "No content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@nosend.net"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/email/verification": {
+            "post": {
+                "security": [],
+                "summary": "Verification email by token",
+                "tags": [
+                    "Email"
+                ],
+                "operationId": "emailVerification",
+                "responses": {
+                    "204": {
+                        "description": "No content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/rest"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "description": "",
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": ""
+            }
+        },
+        "schemas": {
+            "responseModel": {
+                "type": "object",
+                "required": [
+                    "code",
+                    "status",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "object"
+                    }
+                }
+            },
+            "validateError": {
+                "type": "object",
+                "properties": {
+                    "field": {
+                        "type": "string",
+                        "example": "userId"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "User ID must be an integer."
+                    }
+                }
+            },
+            "status200": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "200 OK",
+                        "properties": {
+                            "code": {
+                                "example": "200"
+                            },
+                            "status": {
+                                "example": "success"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status201": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "201 Created",
+                        "properties": {
+                            "code": {
+                                "example": "201"
+                            },
+                            "status": {
+                                "example": "success"
+                            },
+                            "message": {
+                                "example": "Created"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status204": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "204 No Content",
+                        "properties": {
+                            "code": {
+                                "example": "204"
+                            },
+                            "status": {
+                                "example": "success"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status400": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "400 Bad Request",
+                        "properties": {
+                            "code": {
+                                "example": "400"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Bad Request"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status401": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "401 Unauthorized",
+                        "properties": {
+                            "code": {
+                                "example": "401"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Unauthorized"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status403": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "403 Forbidden",
+                        "properties": {
+                            "code": {
+                                "example": "403"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Forbidden"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status404": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "401 Not Found",
+                        "properties": {
+                            "code": {
+                                "example": "404"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Not Found"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status422": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "422 Unprocessable Entity",
+                        "properties": {
+                            "code": {
+                                "example": "422"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Unprocessable Entity"
+                            },
+                            "result": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/validateError"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "status500": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "500 Internal Server Error",
+                        "properties": {
+                            "code": {
+                                "example": "500"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Internal Server Error"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status503": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/responseModel"
+                    },
+                    {
+                        "title": "503 Service Unavailable",
+                        "properties": {
+                            "code": {
+                                "example": "503"
+                            },
+                            "status": {
+                                "example": "error"
+                            },
+                            "message": {
+                                "example": "Service Unavailable"
+                            }
+                        }
+                    }
+                ]
+            },
+            "user": {
+                "type": "object",
+                "required": [
+                    "email"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "token": {
+                "type": "object",
+                "required": [
+                    "token",
+                    "expiredAt"
+                ],
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "expiredAt": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "staticPage": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "config": {
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "type": "object",
+                        "properties": {
+                            "major": {
+                                "type": "integer"
+                            },
+                            "minor": {
+                                "type": "integer"
+                            },
+                            "patch": {
+                                "type": "integer"
+                            },
+                            "commit": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "parameters": {
+                        "type": "object",
+                        "properties": {}
+                    },
+                    "errors": {
+                        "type": "object",
+                        "properties": {}
+                    }
+                }
+            },
+            "recoveryPasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email"
+                    }
+                }
+            },
+            "recoveryPassword": {
+                "type": "object",
+                "properties": {
+                    "resetToken": {
+                        "type": "string",
+                        "description": "Password reset token"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Minimum 2, maximum 255 characters"
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "description": "Minimum 2, maximum 255 characters"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Minimum 2, maximum 255 characters"
+                    }
+                }
+            }
+        }
+    }
+}
