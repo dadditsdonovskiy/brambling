@@ -16,7 +16,7 @@ use App\Services\Word\SendEmailCountIsExceeded;
  */
 class WordCreateController extends Controller
 {
-    public const WORDS_IN_DICTIONARY_LIMIT = 5;
+    public const WORDS_IN_DICTIONARY_LIMIT = 100;
 
     public function __construct(protected CreateService $createService, protected SendEmailCountIsExceeded $emailService)
     {
