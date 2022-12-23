@@ -11,6 +11,12 @@ use App\Http\Controllers\Api\User\RegisterController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
 use App\Http\Controllers\Api\User\SocialLoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Dictionary\DictionaryCreateController;
+use App\Http\Controllers\Api\Dictionary\DictionaryListController;
+use App\Http\Controllers\Api\Dictionary\DictionaryDeleteController;
+use App\Http\Controllers\Api\Word\WordCreateController;
+use App\Http\Controllers\Api\Word\WordListController;
+use App\Http\Controllers\Api\Word\WordDeleteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +65,19 @@ Route::group(
             }
         );
         Route::get('config', ConfigController::class);
+
     }
 );
 
 Route::get('swagger/json', [SwaggerController::class, 'json']);
+Route::group(
+    ['middleware' => ['json.formatter'],'prefix' => 'dictionary'],
+    function () {
+        Route::post('', DictionaryCreateController::class);
+        Route::get('', DictionaryListController::class);
+        Route::delete('{id}', DictionaryDeleteController::class);
+        Route::post('{id}/word', WordCreateController::class);
+        Route::get('{id}/word', WordListController::class);
+        Route::delete('/word/{id}', WordDeleteController::class);
+    }
+);

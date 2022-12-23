@@ -706,6 +706,302 @@
                     }
                 }
             }
+        },
+        "/v1/dictionary/{id}": {
+            "delete": {
+                "security": [],
+                "summary": "Delete of dictionary by id",
+                "tags": [
+                    "Dictionary"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "operationId": "dictionaryDelete",
+                "responses": {
+                    "204": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/dictionary": {
+            "post": {
+                "security": [],
+                "summary": "Create new dictionary",
+                "tags": [
+                    "Dictionary"
+                ],
+                "operationId": "create new dictionary",
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status201"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/dictionary"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status422"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createDictionary"
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "security": [],
+                "summary": "List of dictionaries",
+                "tags": [
+                    "Dictionary"
+                ],
+                "operationId": "dictionaryIndex",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Pagination page"
+                    },
+                    {
+                        "in": "query",
+                        "name": "perPage",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Per page items"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/dictionary"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/status401"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/dictionary/{id}/word": {
+            "post": {
+                "security": [],
+                "summary": "Create word for the dictionary",
+                "tags": [
+                    "Words"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createWord"
+                            }
+                        }
+                    }
+                },
+                "operationId": "wordCreate",
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status201"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/word"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "security": [],
+                "summary": "Get list of words by dictionary id",
+                "tags": [
+                    "Words"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Pagination page"
+                    },
+                    {
+                        "in": "query",
+                        "name": "perPage",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": false,
+                        "description": "Per page items"
+                    }
+                ],
+                "operationId": "wordList",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status200"
+                                        },
+                                        {
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/word"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/dictionary/word/{id}": {
+            "delete": {
+                "security": [],
+                "summary": "Create word for the dictionary",
+                "tags": [
+                    "Words"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "operationId": "WordDelete",
+                "responses": {
+                    "204": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/status204"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "servers": [
@@ -995,6 +1291,33 @@
                     }
                 }
             },
+            "dictionary": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "word": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "dictionaryId"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "dictionary_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
             "staticPage": {
                 "type": "object",
                 "properties": {
@@ -1063,6 +1386,24 @@
                     "email": {
                         "type": "string",
                         "description": "Minimum 2, maximum 255 characters"
+                    }
+                }
+            },
+            "createDictionary": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Dictionary name (required)"
+                    }
+                }
+            },
+            "createWord": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Word name (required)"
                     }
                 }
             }

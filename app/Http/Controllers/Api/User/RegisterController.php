@@ -28,7 +28,6 @@ class RegisterController extends Controller
 
     public function __invoke(RegisterUser $registerUser)
     {
-        dd(123);
         $user = $this->createUserService->create($registerUser->only(['email','password']));
         $token = $user->createToken('Laravel Password Grant Client');
 
